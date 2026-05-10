@@ -10,7 +10,7 @@ import os
 st.set_page_config(page_title="Nayyara Design - Custom Interior", page_icon="🛋️", layout="wide")
 
 # ==========================================
-# 2. FUNGSI UTILITAS (ADVANCE)
+# 2. FUNGSI UTILITAS & DATA (ADVANCE)
 # ==========================================
 def format_rupiah(angka):
     """Fungsi agar format uang seragam di seluruh aplikasi"""
@@ -18,39 +18,91 @@ def format_rupiah(angka):
 
 def get_local_image(image_filename):
     """Memuat gambar lokal murni dengan Absolute Path agar terbaca di Codespaces"""
-    # Dapatkan alamat folder tempat app.py ini berada secara otomatis
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    # Gabungkan alamat folder dengan nama file gambarnya
     image_path = os.path.join(current_dir, image_filename)
     
     if os.path.exists(image_path):
         with open(image_path, "rb") as img_file:
-            # Pastikan format base64 sesuai dengan tipe file
             ext = image_filename.split('.')[-1].lower()
             mime_type = "jpeg" if ext in ["jpg", "jpeg"] else ext
             return f"data:image/{mime_type};base64,{base64.b64encode(img_file.read()).decode()}"
-    return "" # Kembalikan string kosong jika gambar tidak ditemukan
-
+    return "" 
 
 def load_katalog():
-    """Menggunakan cache agar DataFrame tidak di-load ulang setiap interaksi"""
-    # Mengambil gambar dari folder lokal
+    """Mengambil gambar dari folder lokal beserta Spesifikasi Lengkap"""
     data = [
-        {"Nama": "Lemari Pakaian Minimalis", "Kategori": "Lemari Custom", "Harga": 3500000, "Gambar": get_local_image("katalog_1.jpeg")},
-        {"Nama": "Kitchen Set Scandinavian", "Kategori": "Kitchen Set", "Harga": 8500000, "Gambar": get_local_image("katalog_2.jpeg")},
-        {"Nama": "Meja Kerja Kayu Jati", "Kategori": "Meja & Kursi", "Harga": 1200000, "Gambar": get_local_image("katalog_3.jpeg")},
-        {"Nama": "Rak TV Industrial", "Kategori": "Lainnya", "Harga": 2100000, "Gambar": get_local_image("katalog_4.jpeg")},
-        {"Nama": "Kabinet Sepatu Elegan", "Kategori": "Lemari Custom", "Harga": 1800000, "Gambar": get_local_image("katalog_5.jpeg")},
-        {"Nama": "Kitchen Island Marble", "Kategori": "Kitchen Set", "Harga": 5500000, "Gambar": get_local_image("katalog_6.jpeg")},
-        {"Nama": "Set Meja Makan Premium", "Kategori": "Meja & Kursi", "Harga": 4500000, "Gambar": get_local_image("katalog_7.jpeg")},
-        {"Nama": "Backdrop TV HPL", "Kategori": "Lainnya", "Harga": 3200000, "Gambar": get_local_image("katalog_8.jpeg")}
+        {
+            "Nama": "Lemari Pakaian Minimalis", "Kategori": "Lemari Custom", "Harga": 3500000, 
+            "Gambar": get_local_image("katalog_1.jpeg"),
+            "Spesifikasi": "**Bahan:** Multiplek Premium 18mm\n**Finishing:** HPL Anti Gores (Solid/Woodgrain)\n**Aksesoris:** Engsel Slow Motion (Tutup perlahan), Rel Laci Tandem\n**Dimensi Standar:** P 120cm x T 200cm x L 55cm\n**Keunggulan:** Desain minimalis tanpa handle luar (finger groove), dilengkapi laci rahasia berenkripsi gembok."
+        },
+        {
+            "Nama": "Kitchen Set Scandinavian", "Kategori": "Kitchen Set", "Harga": 8500000, 
+            "Gambar": get_local_image("katalog_2.jpeg"),
+            "Spesifikasi": "**Bahan Kabinet:** Blockboard 18mm (Tahan lembab)\n**Finishing Kabinet:** HPL kombinasi Putih Doff & Kayu Terang\n**Top Table (Meja):** Solid Surface putih / Granit Hitam\n**Dimensi:** Harga untuk ukuran standar lurus 2,5 meter.\n**Bonus:** Sudah termasuk rak piring tarik stenlis, rak sendok, dan laci bumbu."
+        },
+        {
+            "Nama": "Meja Kerja Kayu Jati", "Kategori": "Meja & Kursi", "Harga": 1200000, 
+            "Gambar": get_local_image("katalog_3.jpeg"),
+            "Spesifikasi": "**Bahan Top Meja:** Kayu Jati Solid / Multiplek Lapis Melamik Jati\n**Kaki Meja:** Besi Hollow tebal gaya Industrial (Dicat Powder Coating Anti Karat)\n**Dimensi:** P 120cm x L 60cm x T 75cm\n**Fitur:** Dilengkapi lubang kabel (grommet) dan laci gantung tipis untuk alat tulis."
+        },
+        {
+            "Nama": "Rak TV Industrial", "Kategori": "Lainnya", "Harga": 2100000, 
+            "Gambar": get_local_image("katalog_4.jpeg"),
+            "Spesifikasi": "**Bahan Rangka:** Besi Hollow Hitam Doff\n**Bahan Ambalan:** Multiplek 15mm Finishing HPL Motif Kayu Natural\n**Dimensi:** P 160cm x L 40cm x T 55cm\n**Kekuatan:** Mampu menahan beban TV LED hingga 65 inch dan perangkat sound system."
+        },
+        {
+            "Nama": "Kabinet Sepatu Elegan", "Kategori": "Lemari Custom", "Harga": 1800000, 
+            "Gambar": get_local_image("katalog_5.jpeg"),
+            "Spesifikasi": "**Bahan:** Multiplek 15mm\n**Finishing:** HPL Motif Serat Kayu Gelap / Duco Putih\n**Kapasitas:** Mampu menampung 15 - 20 pasang sepatu/sandal.\n**Fitur Khusus:** Terdapat celah sirkulasi udara tersembunyi agar sepatu tidak bau/berjamur, dan rak miring untuk memudahkan pengambilan."
+        },
+        {
+            "Nama": "Kitchen Island Marble", "Kategori": "Kitchen Set", "Harga": 5500000, 
+            "Gambar": get_local_image("katalog_6.jpeg"),
+            "Spesifikasi": "**Top Table:** Marmer Sintetis / Granit kualitas Premium\n**Bahan Kabinet:** Blockboard 18mm\n**Finishing:** Cat Duco Glossy / HPL Mewah\n**Dimensi:** P 150cm x L 80cm x T 85cm\n**Fungsi:** Sangat cocok untuk area potong makanan, mini bar, atau meja sarapan dadakan."
+        },
+        {
+            "Nama": "Set Meja Makan Premium", "Kategori": "Meja & Kursi", "Harga": 4500000, 
+            "Gambar": get_local_image("katalog_7.jpeg"),
+            "Spesifikasi": "**Bahan Meja:** Kayu Mahoni/Jati finishing Natural Halus\n**Set Isi:** 1 Meja Makan + 4 Kursi Makan Nyaman\n**Bahan Kursi:** Rangka kayu kokoh dengan sandaran empuk dilapisi kain Fabric Premium / Oscar tahan air.\n**Dimensi Meja:** 140cm x 80cm."
+        },
+        {
+            "Nama": "Backdrop TV HPL", "Kategori": "Lainnya", "Harga": 3200000, 
+            "Gambar": get_local_image("katalog_8.jpeg"),
+            "Spesifikasi": "**Bahan Panel Utama:** Multiplek 15mm lapis HPL Motif Marmer\n**Aksen:** Kisi-kisi kayu (Fluted Panel WPC)\n**Dimensi:** Menyesuaikan ukuran ruang TV (Harga start dari luasan 2x2 meter)\n**Fitur:** Bracket TV gantung tersembunyi, jalur kabel tak terlihat, dan efek lampu LED Strip Warm White."
+        }
     ]
     return pd.DataFrame(data)
 
 df_katalog = load_katalog()
 
 # ==========================================
-# 3. MEGA CSS DENGAN ANIMASI LENGKAP & FIX LAYOUT
+# 3. POP-UP DIALOG SPESIFIKASI (FITUR BARU)
+# ==========================================
+@st.dialog("📖 Detail Spesifikasi Produk")
+def pop_up_spesifikasi(nama, kategori, harga, gambar, spesifikasi):
+    # Desain Isi Pop-up
+    st.markdown(f"<h3 style='color:#8B5E3C; margin-bottom:5px;'>{nama}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color:#888; font-size:14px; margin-top:-10px;'>Kategori: {kategori}</p>", unsafe_allow_html=True)
+    
+    if gambar:
+        st.markdown(f'<img src="{gambar}" style="width:100%; border-radius:12px; margin-bottom:15px; border:1px solid #eee;">', unsafe_allow_html=True)
+    else:
+        st.info("Gambar lokal belum tersedia.")
+        
+    st.markdown("#### Detail Material:")
+    st.markdown(spesifikasi)
+    
+    st.divider()
+    st.markdown(f"**Estimasi Harga:** <span style='font-size:24px; color:#8B5E3C; font-weight:900;'>{format_rupiah(harga)}</span>", unsafe_allow_html=True)
+    
+    # Tombol WA di dalam Pop-up
+    pesan = f"Halo Nayyara Design, saya sudah membaca spesifikasinya dan tertarik memesan *{nama}* seharga {format_rupiah(harga)}."
+    link_wa = f"https://wa.me/6281380008637?text={urllib.parse.quote(pesan)}"
+    st.link_button("✨ Pesan Langsung via WhatsApp", link_wa, use_container_width=True)
+
+# ==========================================
+# 4. MEGA CSS DENGAN ANIMASI LENGKAP & FIX LAYOUT
 # ==========================================
 st.markdown("""
     <style>
@@ -62,68 +114,37 @@ st.markdown("""
 
     /* ============ FLOATING ELEMENTS (Orb Animasi) ============ */
     .floating-element {
-        position: fixed;
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
+        position: fixed; width: 150px; height: 150px; border-radius: 50%;
         background: linear-gradient(135deg, rgba(139, 94, 60, 0.15), rgba(218, 165, 32, 0.1));
-        filter: blur(40px);
-        animation: float 8s ease-in-out infinite;
-        pointer-events: none;
-        z-index: 0;
+        filter: blur(40px); animation: float 8s ease-in-out infinite; pointer-events: none; z-index: 0;
     }
-    
-    @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-30px) rotate(180deg); }
-    }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(180deg); } }
 
     /* ============ NAVBAR ============ */
-    .nav-title {
-        font-size: 32px;
-        font-weight: 800;
-        color: #8B5E3C;
-        margin-top: 5px;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    }
+    .nav-title { font-size: 32px; font-weight: 800; color: #8B5E3C; margin-top: 5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
     
     /* Modifikasi Tombol Streamlit Native */
     .stButton>button, .stLinkButton>a {
         background: linear-gradient(135deg, #8B5E3C, #5C4033) !important;
-        color: white !important;
-        border-radius: 12px !important;
-        border: none !important;
-        padding: 10px 24px !important;
-        font-weight: 700 !important;
+        color: white !important; border-radius: 12px !important; border: none !important;
+        padding: 10px 24px !important; font-weight: 700 !important;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-        width: 100%;
-        text-align: center;
-        text-decoration: none;
+        width: 100%; text-align: center; text-decoration: none;
     }
     .stButton>button:hover, .stLinkButton>a:hover {
-        transform: translateY(-5px) scale(1.02) !important;
-        box-shadow: 0 10px 20px rgba(139, 94, 60, 0.4) !important;
+        transform: translateY(-5px) scale(1.02) !important; box-shadow: 0 10px 20px rgba(139, 94, 60, 0.4) !important;
     }
 
-    /* Memaksa wrapper tombol Link dan teksnya rata tengah sempurna */
     [data-testid="stLinkButton"] { display: flex !important; justify-content: center !important; }
     [data-testid="stLinkButton"] p { text-align: center !important; margin: auto !important; width: 100% !important; display: flex; justify-content: center; align-items: center; }
 
     /* ============ HERO BANNER ANIMASI ============ */
     .hero-section {
         background: linear-gradient(-45deg, #2D1A11, #4A2E1B, #8B5E3C, #5C4033);
-        background-size: 400% 400%;
-        animation: gradientShift 15s ease infinite;
-        padding: 80px 20px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        border-radius: 16px;
-        margin-top: 10px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        z-index: 1;
+        background-size: 400% 400%; animation: gradientShift 15s ease infinite;
+        padding: 80px 20px; text-align: center; position: relative; overflow: hidden;
+        border-radius: 16px; margin-top: 10px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 1;
     }
-    
     @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
     
     .hero-section::before {
@@ -131,14 +152,12 @@ st.markdown("""
         background-image: radial-gradient(2px 2px at 20px 30px, rgba(255,215,0,0.8), transparent), radial-gradient(2px 2px at 40px 70px, rgba(245,245,220,0.8), transparent), radial-gradient(2px 2px at 50px 160px, rgba(210,180,140,0.8), transparent), radial-gradient(3px 3px at 160px 120px, rgba(255,255,255,0.6), transparent);
         background-repeat: repeat; background-size: 200px 200px; animation: sparkle 15s linear infinite; opacity: 0.6;
     }
-    
     @keyframes sparkle { 0% { transform: translateY(0); } 100% { transform: translateY(-200px); } }
     
     .hero-title {
         font-size: 60px !important; font-weight: 800; background: linear-gradient(90deg, #F5F5DC, #FFD700, #FFF8DC, #F5F5DC);
         background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textGlow 4s ease infinite; margin-bottom: 10px; position: relative; z-index: 2;
     }
-    
     @keyframes textGlow { 0%, 100% { background-position: 0% 50%; filter: drop-shadow(0 0 15px rgba(255,215,0,0.3)); } 50% { background-position: 100% 50%; filter: drop-shadow(0 0 25px rgba(255,255,255,0.5)); } }
     
     .hero-subtitle { font-size: 20px; color: rgba(255,255,255,0.9); position: relative; z-index: 2; animation: fadeInUp 1s ease; }
@@ -171,9 +190,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. NAVIGATION BAR
+# 5. NAVIGATION BAR (Telah Dirapikan)
 # ==========================================
-col_logo, col_space, col_kontak, col_layanan = st.columns([4, 2, 1.5, 1.5])
+# Kolom "Layanan Kami" dihapus, rasio diubah agar rapi
+col_logo, col_space, col_kontak = st.columns([5, 2.5, 1.5])
 
 with col_logo:
     st.markdown('<div class="nav-title">Nayyara Design</div>', unsafe_allow_html=True)
@@ -183,19 +203,11 @@ with col_space:
 
 with col_kontak:
     pesan_halo = "Halo Nayyara Design, saya ingin konsultasi mengenai desain interior."
-    # Menggunakan nomor WA baru
     link_wa_kontak = f"https://wa.me/6281380008637?text={urllib.parse.quote(pesan_halo)}"
-    st.link_button("📞 Kontak", link_wa_kontak, use_container_width=True)
-
-with col_layanan:
-    with st.popover("🏢 Layanan Kami ▾", use_container_width=True):
-        st.markdown("**Pilih Spesialisasi Kami:**")
-        if st.button("🪑 Custom Furniture"): st.toast("Kategori Custom Furniture!")
-        if st.button("🍳 Kitchen Set"): st.toast("Kategori Kitchen Set!")
-        if st.button("📐 Desain Interior"): st.toast("Kategori Desain Interior!")
+    st.link_button("📞 Kontak Kami", link_wa_kontak, use_container_width=True)
 
 # ==========================================
-# 5. HERO BANNER ANIMASI & SCROLLING TEXT
+# 6. HERO BANNER ANIMASI & SCROLLING TEXT
 # ==========================================
 st.markdown("""
     <div class="hero-section">
@@ -213,7 +225,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 6. TABS APLIKASI
+# 7. TABS APLIKASI
 # ==========================================
 tab_toko, tab_kalkulator, tab_customizer = st.tabs([
     "🛍️ Katalog Produk", 
@@ -244,7 +256,6 @@ with tab_toko:
         kolom_produk = st.columns(4)
         for indeks, baris in df_tampil.reset_index().iterrows():
             with kolom_produk[indeks % 4]:
-                # Gunakan fallback gray background jika gambar belum ditemukan
                 img_src_html = f'<img src="{baris["Gambar"]}" alt="{baris["Nama"]}">' if baris["Gambar"] else '<div style="width:100%; height:100%; background-color:#ccc; display:flex; align-items:center; justify-content:center; color:#666;">No Image</div>'
                 
                 card_html = f"""
@@ -263,10 +274,14 @@ with tab_toko:
                 """
                 st.markdown(card_html, unsafe_allow_html=True)
                 
-                pesan = f"Halo Nayyara Design, saya tertarik dengan produk {baris['Nama']} seharga {format_rupiah(baris['Harga'])} di katalog."
-                # Menggunakan nomor WA baru
-                link_wa = f"https://wa.me/6281380008637?text={urllib.parse.quote(pesan)}"
-                st.link_button("🛒 Pesan via WA", link_wa, use_container_width=True)
+                # TOMBOL POP-UP SPESIFIKASI
+                if st.button("🔍 Lihat Spesifikasi", key=f"btn_spec_{indeks}", use_container_width=True):
+                    pop_up_spesifikasi(baris['Nama'], baris['Kategori'], baris['Harga'], baris['Gambar'], baris['Spesifikasi'])
+                
+                # Tombol WA langsung (opsional, jika ingin double button)
+                # pesan = f"Halo Nayyara Design, saya tertarik dengan produk {baris['Nama']} seharga {format_rupiah(baris['Harga'])} di katalog."
+                # link_wa = f"https://wa.me/6281380008637?text={urllib.parse.quote(pesan)}"
+                # st.link_button("🛒 Pesan", link_wa, use_container_width=True)
 
 # --- TAB 2: KALKULATOR STANDAR ---
 with tab_kalkulator:
@@ -293,7 +308,6 @@ with tab_kalkulator:
         st.metric("Estimasi Biaya", format_rupiah(total_harga_std))
         
         pesan_wa_std = f"Halo Nayyara Design, saya minta estimasi furnitur {panjang_std}m x {tinggi_std}m bahan {material_dasar_std.split(' -')[0]} finishing {finishing_std.split(' -')[0]}. Estimasi: {format_rupiah(total_harga_std)}."
-        # Menggunakan nomor WA baru
         st.link_button("📱 Ajukan Desain via WA", f"https://wa.me/6281380008637?text={urllib.parse.quote(pesan_wa_std)}", use_container_width=True)
 
 # --- TAB 3: CUSTOMIZER FURNITUR 360 ---
@@ -327,9 +341,6 @@ with tab_customizer:
     with col_vis2:
         img_url = ""
         
-        # =================================================================
-        # LOGIKA SMART IMAGE MAPPING (LOKAL)
-        # =================================================================
         if vis_tipe == "Lemari Pakaian":
             if "Putih" in vis_warna: img_url = get_local_image("lemari_putih.jpeg")
             elif "Abu-abu" in vis_warna: img_url = get_local_image("lemari_hitam.jpeg")
@@ -342,7 +353,6 @@ with tab_customizer:
             elif "Terang" in vis_warna: img_url = get_local_image("kitchen_oak.jpeg")
             else: img_url = get_local_image("kitchen_walnut.jpeg")
 
-        # HTML untuk gambar (dengan fallback abu-abu jika file belum tersedia)
         vis_img_html = f'<img src="{img_url}" alt="Visualisasi Furnitur">' if img_url else '<div style="width:100%; height:100%; background-color:#ccc; display:flex; align-items:center; justify-content:center; color:#666; font-size:18px;">Menunggu Gambar Lokal...</div>'
 
         st.markdown(f"""
@@ -366,6 +376,5 @@ with tab_customizer:
             st.metric(f"Estimasi {vis_bahan}", format_rupiah(estimasi_custom))
 
         pesan_custom = f"Halo Nayyara Design, saya sudah cek Visualisator di Website.\n\nSaya ingin memesan:\n- Jenis: {vis_tipe}\n- Ukuran: P {vis_panjang}m x T {vis_tinggi}m x Kedalaman {vis_lebar}m\n- Material: {vis_bahan}\n- Warna: {vis_warna}\n\nEstimasi harga di web {format_rupiah(estimasi_custom)}. Tolong bantu survey ya!"
-        # Menggunakan nomor WA baru
         wa_custom = f"https://wa.me/6281380008637?text={urllib.parse.quote(pesan_custom)}"
         st.link_button("✨ Pesan Desain Ini Sekarang", wa_custom, use_container_width=True)
